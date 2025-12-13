@@ -128,6 +128,7 @@ $pageTitle = 'دليل الحسابات';
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -161,6 +162,9 @@ $pageTitle = 'دليل الحسابات';
                     <h1><i class="fas fa-sitemap"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button class="btn btn-primary" onclick="document.getElementById('addAccountModal').style.display='block'">
                         <i class="fas fa-plus"></i> حساب جديد
                     </button>
@@ -266,7 +270,17 @@ $pageTitle = 'دليل الحسابات';
 
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
         
         // Close modal when clicking outside

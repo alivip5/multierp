@@ -125,7 +125,8 @@ function getCurrentModule() {
  * توليد HTML للقائمة الجانبية
  */
 function renderSidebar($company, $modules, $currentModule) {
-    $html = '<aside class="sidebar" id="sidebar">';
+    $html = '<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>';
+    $html .= '<aside class="sidebar" id="sidebar">';
     $html .= '<div class="sidebar-header">';
     $html .= '<div class="sidebar-logo"><i class="fas fa-building"></i></div>';
     $html .= '<span class="sidebar-brand">' . htmlspecialchars($company['name']) . '</span>';
@@ -207,6 +208,11 @@ function renderHeader($pageTitle, $pageSubtitle = '', $user = null, $headerActio
     $html .= '<div class="header-actions">';
     $html .= $headerActions;
     
+    // زر القائمة للموبايل
+    $html .= '<button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">';
+    $html .= '<i class="fas fa-bars"></i>';
+    $html .= '</button>';
+    
     if ($user) {
         $html .= '<button class="header-btn" onclick="toggleTheme()" title="تبديل الثيم">';
         $html .= '<i class="fas fa-moon" id="themeIcon"></i>';
@@ -287,9 +293,17 @@ function getSharedJS() {
     return '
     <script>
         function toggleSidebar() {
-            document.getElementById("sidebar").classList.toggle("collapsed");
-            localStorage.setItem("sidebarCollapsed", 
-                document.getElementById("sidebar").classList.contains("collapsed"));
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            // Check if we are in mobile mode (window width < 992px)
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", sidebar.classList.contains("collapsed"));
+            }
         }
         
         function toggleTheme() {

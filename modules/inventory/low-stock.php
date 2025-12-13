@@ -88,6 +88,7 @@ $pageTitle = 'تنبيهات المخزون';
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -121,6 +122,9 @@ $pageTitle = 'تنبيهات المخزون';
                     <h1><i class="fas fa-exclamation-triangle text-danger"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="products.php" class="btn btn-outline">عودة للمنتجات</a>
                 </div>
             </header>
@@ -177,7 +181,17 @@ $pageTitle = 'تنبيهات المخزون';
 
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
     </script>
 </body>

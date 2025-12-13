@@ -96,6 +96,7 @@ $statusLabels = ['draft' => 'مسودة', 'pending' => 'قيد الانتظار'
 </head>
 <body>
     <div class="app-container">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -115,6 +116,9 @@ $statusLabels = ['draft' => 'مسودة', 'pending' => 'قيد الانتظار'
                     <h1><i class="fas fa-edit"></i> تعديل: <?= htmlspecialchars($order['order_number']) ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="view_order.php?id=<?= $order_id ?>" class="btn btn-outline">عرض</a>
                     <a href="orders.php" class="btn btn-outline">عودة</a>
                 </div>

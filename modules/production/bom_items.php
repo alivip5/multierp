@@ -103,6 +103,7 @@ try {
 </head>
 <body>
     <div class="app-container">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -123,6 +124,9 @@ try {
                     <p>المنتج النهائي: <?= htmlspecialchars($bom['product_name'] ?? '-') ?></p>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="bom.php" class="btn btn-outline">عودة للقوائم</a>
                 </div>
             </header>

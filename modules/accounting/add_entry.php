@@ -108,6 +108,7 @@ try {
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -141,6 +142,9 @@ try {
                     <h1><i class="fas fa-plus-circle"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button type="submit" form="entryForm" class="btn btn-primary"><i class="fas fa-save"></i> حفظ القيد</button>
                     <a href="entries.php" class="btn btn-outline">عودة</a>
                 </div>
@@ -237,7 +241,17 @@ try {
 
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
 
         function calcTotals() {

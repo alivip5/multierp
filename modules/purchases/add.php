@@ -80,6 +80,7 @@ $warehouses = $db->fetchAll("SELECT * FROM warehouses WHERE company_id = ? AND s
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -113,6 +114,9 @@ $warehouses = $db->fetchAll("SELECT * FROM warehouses WHERE company_id = ? AND s
                     <h1><i class="fas fa-plus"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="suppliers.php?action=add" class="btn btn-outline" target="_blank"><i class="fas fa-truck"></i> إضافة مورد</a>
                     <button type="submit" form="purchaseForm" class="btn btn-primary"><i class="fas fa-save"></i> حفظ</button>
                     <a href="index.php" class="btn btn-outline">عودة</a>
@@ -441,7 +445,17 @@ $warehouses = $db->fetchAll("SELECT * FROM warehouses WHERE company_id = ? AND s
     </script>
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
     </script>
 </body>

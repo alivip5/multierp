@@ -199,6 +199,7 @@ $pageTitle = 'الإعدادات';
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -232,6 +233,9 @@ $pageTitle = 'الإعدادات';
                     <h1><i class="fas fa-cog"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button class="header-btn" onclick="toggleTheme()"><i class="fas fa-moon" id="themeIcon"></i></button>
                     <div class="user-menu">
                         <div class="user-avatar"><?= mb_substr($user['full_name'], 0, 1, 'UTF-8') ?></div>
@@ -544,7 +548,17 @@ $pageTitle = 'الإعدادات';
         });
         
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
         
         function toggleTheme() {

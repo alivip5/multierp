@@ -116,6 +116,7 @@ $pageTitle = 'فاتورة #' . $invoice['invoice_number'];
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -149,6 +150,9 @@ $pageTitle = 'فاتورة #' . $invoice['invoice_number'];
                     <h1><i class="fas fa-file-invoice"></i> <?= $pageTitle ?></h1>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button onclick="window.print()" class="btn btn-primary"><i class="fas fa-print"></i> طباعة</button>
                     <a href="index.php" class="btn btn-outline">عودة</a>
                 </div>
@@ -244,7 +248,17 @@ $pageTitle = 'فاتورة #' . $invoice['invoice_number'];
     
     <script>
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("sidebarOverlay");
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle("show");
+                if (overlay) overlay.classList.toggle("show");
+            } else {
+                sidebar.classList.toggle("collapsed");
+                localStorage.setItem("sidebarCollapsed", 
+                    sidebar.classList.contains("collapsed"));
+            }
         }
     </script>
 </body>

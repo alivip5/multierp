@@ -120,6 +120,7 @@ $statusColors = [
 </head>
 <body>
     <div class="app-container">
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo"><i class="fas fa-building"></i></div>
@@ -154,6 +155,9 @@ $statusColors = [
                     <p>إدارة عمليات الإنتاج والتصنيع</p>
                 </div>
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <a href="add_order.php" class="btn btn-primary"><i class="fas fa-plus"></i> أمر إنتاج جديد</a>
                 </div>
             </header>

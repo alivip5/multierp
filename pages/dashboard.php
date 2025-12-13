@@ -67,6 +67,7 @@ $pageTitle = 'لوحة التحكم';
 <body>
     <div class="app-container">
         <!-- Sidebar -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-logo">
@@ -111,6 +112,9 @@ $pageTitle = 'لوحة التحكم';
                 </div>
                 
                 <div class="header-actions">
+                    <button class="menu-toggle-btn" onclick="toggleSidebar()" title="القائمة">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <button class="header-btn" onclick="toggleTheme()" title="تبديل الثيم">
                         <i class="fas fa-moon" id="themeIcon"></i>
                     </button>
@@ -376,9 +380,17 @@ $pageTitle = 'لوحة التحكم';
     <script>
         // Toggle Sidebar
         function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            localStorage.setItem('sidebarCollapsed', 
-                document.getElementById('sidebar').classList.contains('collapsed'));
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (window.innerWidth < 992) {
+                sidebar.classList.toggle('show');
+                if (overlay) overlay.classList.toggle('show');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                localStorage.setItem('sidebarCollapsed', 
+                    sidebar.classList.contains('collapsed'));
+            }
         }
         
         // Toggle Theme
